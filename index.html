@@ -1,0 +1,776 @@
+<title>Малина Юнайтед</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=Golos+Text:wght@400;500;600;700;800&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+/* Layout: премиальная тёмная клубная страница — глубокий графит, малиновые градиенты, золото, стекло */
+:root{
+  --bg:#0b0d13;
+  --bg2:#101320;
+  --glass:#ffffff09;
+  --glass-strong:#ffffff0f;
+  --line:#ffffff14;
+  --line-hot:#e3195f55;
+  --fg:#f5f2f4;
+  --fg-dim:#9b97a3;
+  --berry:#e3195f;
+  --berry-hot:#ff4d8d;
+  --berry-deep:#8f0c3f;
+  --gold:#dfb65e;
+  --leaf:#6cbf45;
+  --pitch-line:#eef6e8;
+  --display:'Russo One',Arial,sans-serif;
+  --body:'Golos Text','Segoe UI',Arial,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.65;
+  margin:0;
+  overflow-x:hidden;
+}
+.wrap{
+  max-width:1120px;
+  margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--berry-hot);outline-offset:3px;border-radius:4px}
+::selection{background:var(--berry);color:#fff}
+
+/* ---------- Шапка ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:#0b0d13}
+header.site{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:50;
+  background:#0b0d13d9;backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+header.site .wrap{display:flex;align-items:center;gap:14px;padding-block:11px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.brand img{width:40px;height:40px;border-radius:50%;background:#fff;object-fit:cover;box-shadow:0 0 0 2px #e3195f66,0 0 18px #e3195f55}
+.brand b{font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:.08em;text-transform:uppercase}
+.brand b i{font-style:normal;color:var(--berry-hot)}
+nav.menu{margin-left:auto;display:flex;flex-wrap:wrap;gap:4px 20px;font-size:14px}
+nav.menu a{text-decoration:none;color:var(--fg-dim);letter-spacing:.05em;transition:color .15s}
+nav.menu a:hover,nav.menu a:focus-visible{color:var(--berry-hot)}
+
+/* ---------- Герой с 3D-сценой ---------- */
+.hero{
+  position:relative;
+  background:
+    radial-gradient(1100px 600px at 75% 20%, #e3195f2e, transparent 60%),
+    radial-gradient(800px 500px at 10% 90%, #6cbf4518, transparent 60%),
+    linear-gradient(180deg,#0b0d13,#101320 70%,var(--bg));
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.hero::after{ /* золотая нить по низу */
+  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5;
+}
+#stars{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:.9}
+.hero .wrap{
+  position:relative;display:grid;grid-template-columns:1.05fr .95fr;
+  gap:30px;align-items:center;padding-block:64px;
+}
+.hero-text{min-width:0}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);
+}
+.eyebrow::before{content:"";width:30px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.hero h1{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(38px,6.6vw,72px);line-height:1.02;
+  margin:16px 0 6px;text-transform:uppercase;text-wrap:balance;
+}
+.hero h1 .berry{
+  background:linear-gradient(100deg,var(--berry-hot) 10%,var(--berry) 55%,#ff7eae 95%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 26px #e3195f66);
+}
+.hero .sub{color:var(--fg-dim);max-width:46ch;margin:14px 0 28px;font-size:17px}
+.hero .sub b{color:var(--fg);font-weight:600}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+.btn{
+  display:inline-block;text-decoration:none;font-weight:700;font-size:14px;
+  letter-spacing:.06em;text-transform:uppercase;border-radius:12px;padding:13px 26px;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn-berry{
+  color:#fff;background:linear-gradient(135deg,var(--berry-hot),var(--berry) 60%,var(--berry-deep));
+  box-shadow:0 10px 30px #e3195f4d, inset 0 1px 0 #ffffff40;
+}
+.btn-berry:hover{transform:translateY(-2px);box-shadow:0 14px 38px #e3195f73, inset 0 1px 0 #ffffff40}
+.btn-ghost{color:var(--fg);border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(6px)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.hero-facts{display:flex;flex-wrap:wrap;gap:12px}
+.fact{
+  background:var(--glass);border:1px solid var(--line);border-radius:14px;
+  padding:12px 18px;min-width:108px;backdrop-filter:blur(8px);
+  position:relative;overflow:hidden;
+}
+.fact::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:linear-gradient(180deg,var(--berry-hot),var(--berry-deep))}
+.fact b{
+  display:block;font-family:var(--display);font-weight:400;font-size:24px;
+  font-variant-numeric:tabular-nums;
+  background:linear-gradient(120deg,#fff,var(--berry-hot));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.fact span{font-size:11px;color:var(--fg-dim);letter-spacing:.09em;text-transform:uppercase}
+
+/* 3D-сцена */
+.hero-3d{position:relative;min-width:0;display:grid;justify-items:center}
+#berry3d{
+  width:min(460px,88vw);aspect-ratio:1;max-width:100%;display:block;
+  filter:drop-shadow(0 30px 60px #e3195f40);
+}
+.hero-3d .caption{
+  margin-top:-6px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--fg-dim);text-align:center;
+}
+.hero-3d .caption b{color:var(--gold);font-weight:700}
+
+/* ---------- Секции ---------- */
+section{padding-block:72px;position:relative}
+.sec-head{margin-bottom:34px}
+.sec-head h2{
+  font-family:var(--display);font-weight:400;font-size:clamp(26px,3.6vw,38px);
+  text-transform:uppercase;margin:12px 0 0;text-wrap:balance;
+}
+.sec-head p{color:var(--fg-dim);max-width:60ch;margin:10px 0 0}
+
+/* появление при скролле (стартовое состояние видимо) */
+.rv{opacity:1}
+@media (prefers-reduced-motion:no-preference){
+  .rv.on{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+}
+
+/* О клубе */
+.about{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch}
+.card{
+  background:linear-gradient(170deg,var(--glass-strong),var(--glass));
+  border:1px solid var(--line);border-radius:18px;padding:26px 28px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 50px #00000059;
+}
+.card h3{
+  font-family:var(--display);font-weight:400;font-size:15px;text-transform:uppercase;
+  letter-spacing:.12em;margin:0 0 12px;color:var(--gold);
+}
+.card p{margin:0;color:var(--fg-dim)}
+.card p+p{margin-top:12px}
+.card p b{color:var(--fg)}
+.coach-card{display:flex;flex-direction:column;justify-content:center;gap:18px;
+  border-color:var(--line-hot);
+  background:
+    radial-gradient(400px 220px at 110% -20%, #e3195f2b, transparent 70%),
+    linear-gradient(170deg,var(--glass-strong),var(--glass));
+}
+.coach{display:flex;align-items:center;gap:18px}
+.coach .num{
+  flex:0 0 auto;width:72px;height:72px;border-radius:18px;
+  background:linear-gradient(145deg,var(--berry-hot),var(--berry-deep));
+  display:grid;place-items:center;
+  font-family:var(--display);font-size:28px;color:#fff;
+  box-shadow:0 12px 30px #e3195f59, inset 0 1px 0 #ffffff4d;
+}
+.coach b{display:block;font-size:19px}
+.coach span{color:var(--fg-dim);font-size:14px}
+.coach .nick{color:var(--berry-hot);font-weight:700;font-size:13px;letter-spacing:.08em}
+.coach-quote{font-size:14px;color:var(--fg-dim);border-left:2px solid var(--gold);padding-left:14px;font-style:italic}
+
+/* Схема на поле */
+.pitch-sec{
+  background:
+    radial-gradient(900px 500px at 50% 0%, #6cbf4512, transparent 65%),
+    #0d0f17;
+  border-block:1px solid var(--line);
+}
+.pitch-grid{display:grid;grid-template-columns:minmax(0,460px) 1fr;gap:44px;align-items:center}
+.pitch-note{color:var(--fg-dim)}
+.pitch-note ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:10px;font-size:14px}
+.pitch-note li{display:flex;gap:12px;align-items:baseline}
+.pitch-note li b{color:var(--fg);min-width:128px;font-weight:700}
+.formation-tag{
+  display:inline-block;font-family:var(--display);font-size:34px;
+  letter-spacing:.1em;margin-top:4px;
+  background:linear-gradient(120deg,var(--leaf),#a6e07f);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 20px #6cbf4540);
+}
+.pitch-frame{
+  border-radius:20px;padding:10px;
+  background:linear-gradient(160deg,#6cbf4533,#e3195f22);
+  box-shadow:0 30px 70px #00000073;
+}
+svg.pitch{display:block;width:100%;height:auto;max-width:100%;border-radius:14px}
+
+/* Состав */
+.squad-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;perspective:900px}
+.player{
+  background:linear-gradient(170deg,var(--glass-strong),var(--glass));
+  border:1px solid var(--line);border-radius:16px;
+  padding:18px 20px;display:flex;gap:16px;align-items:center;
+  position:relative;overflow:hidden;backdrop-filter:blur(8px);
+  transform-style:preserve-3d;will-change:transform;
+}
+.player::before{ /* бликовая полоса */
+  content:"";position:absolute;inset:-60% auto auto -30%;width:60%;height:220%;
+  background:linear-gradient(100deg,transparent,#ffffff12,transparent);
+  transform:rotate(18deg) translateX(-140%);
+}
+.player::after{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--berry-hot),var(--berry-deep))}
+.player.gk::after{background:linear-gradient(180deg,#f0cb6a,#a7822f)}
+.player.sub::after{background:linear-gradient(180deg,#8ed66a,#3f7a26)}
+.player .num{
+  flex:0 0 auto;font-family:var(--display);font-size:34px;line-height:1;
+  min-width:52px;text-align:right;font-variant-numeric:tabular-nums;
+  background:linear-gradient(170deg,#fff 20%,var(--berry-hot));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.player.gk .num{background:linear-gradient(170deg,#fff 20%,var(--gold));-webkit-background-clip:text;background-clip:text}
+.player.sub .num{background:linear-gradient(170deg,#fff 20%,var(--leaf));-webkit-background-clip:text;background-clip:text}
+.player b{display:block;font-size:17px;line-height:1.3}
+.player .nick{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--berry-hot);text-transform:uppercase}
+.player.gk .nick{color:var(--gold)}
+.player.sub .nick{color:var(--leaf)}
+.player .pos{font-size:13px;color:var(--fg-dim)}
+@media (prefers-reduced-motion:no-preference){
+  .player{transition:border-color .2s, box-shadow .2s}
+  .player:hover{border-color:var(--line-hot);box-shadow:0 18px 44px #e3195f26}
+  .player:hover::before{transition:transform .9s ease;transform:rotate(18deg) translateX(320%)}
+}
+.squad-sub-head{
+  font-family:var(--display);font-weight:400;font-size:15px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--fg-dim);margin:36px 0 14px;
+  display:flex;align-items:center;gap:14px;
+}
+.squad-sub-head::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.squad-sub-head:first-of-type{margin-top:0}
+
+/* Форма */
+.kit-sec{
+  background:
+    radial-gradient(900px 480px at 50% 10%, #e3195f14, transparent 65%),
+    #0d0f17;
+  border-block:1px solid var(--line);
+}
+.kit-figure{
+  margin:0;border-radius:20px;overflow:hidden;
+  border:1px solid var(--line);
+  background:linear-gradient(160deg,#e9e7ea,#cfcbd2);
+  box-shadow:0 30px 70px #00000073;
+}
+.kit-figure img{display:block;width:100%;height:auto}
+.kit-notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
+.kit-note{
+  background:linear-gradient(170deg,var(--glass-strong),var(--glass));
+  border:1px solid var(--line);border-radius:14px;padding:16px 20px;backdrop-filter:blur(8px);
+}
+.kit-note b{
+  display:block;font-family:var(--display);font-weight:400;font-size:13px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;
+}
+.kit-note span{font-size:14px;color:var(--fg-dim)}
+
+/* Матчи */
+.matches{
+  border:1px solid var(--line);border-radius:20px;padding:34px 28px;text-align:center;
+  background:
+    radial-gradient(500px 240px at 50% -30%, #e3195f26, transparent 70%),
+    linear-gradient(170deg,var(--glass-strong),var(--glass));
+  backdrop-filter:blur(8px);
+}
+.matches p{margin:8px 0 0;color:var(--fg-dim);max-width:52ch;margin-inline:auto}
+.matches .soon{
+  font-family:var(--display);font-weight:400;font-size:24px;text-transform:uppercase;
+  background:linear-gradient(110deg,var(--berry-hot),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* Футер */
+footer.site{border-top:1px solid var(--line);background:#090b10}
+footer.site .wrap{padding-block:30px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;color:var(--fg-dim);font-size:14px}
+footer.site img{width:32px;height:32px;border-radius:50%;background:#fff;box-shadow:0 0 14px #e3195f4d}
+footer.site .right{margin-left:auto;color:var(--gold)}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;padding-block:44px;text-align:left}
+  .hero-3d{order:-1}
+  #berry3d{width:min(330px,80vw)}
+  .about{grid-template-columns:1fr}
+  .pitch-grid{grid-template-columns:1fr}
+  section{padding-block:52px}
+}
+</style>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="logo.jpg" alt="Эмблема Малина Юнайтед"><b>Малина <i>Юнайтед</i></b></a>
+    <nav class="menu">
+      <a href="#about">О клубе</a>
+      <a href="#formation">Схема</a>
+      <a href="#squad">Состав</a>
+      <a href="#kit">Форма</a>
+      <a href="#matches">Матчи</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-text">
+      <span class="eyebrow">Белорусская медиалига · сезон 2026</span>
+      <h1>Малина<br><span class="berry">Юнайтед</span></h1>
+      <p class="sub">Медиафутбольный клуб, который заходит в Белорусскую медиалигу, чтобы давить соперников прессингом и контентом. <b>Сладкая ягода — жёсткая игра.</b></p>
+      <div class="hero-cta">
+        <a class="btn btn-berry" href="#squad">Состав команды</a>
+        <a class="btn btn-ghost" href="#formation">Тактика 4-2-3-1</a>
+      </div>
+      <div class="hero-facts">
+        <div class="fact"><b>13</b><span>игроков в заявке</span></div>
+        <div class="fact"><b>4-2-3-1</b><span>базовая схема</span></div>
+        <div class="fact"><b>2026</b><span>дебютный сезон</span></div>
+      </div>
+    </div>
+    <div class="hero-3d">
+      <canvas id="berry3d" aria-label="Вращающаяся трёхмерная малина — символ клуба"></canvas>
+      <div class="caption">Эмблема клуба <b>в 3D</b> · покрути мышкой</div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Клуб</span>
+      <h2>О команде</h2>
+    </div>
+    <div class="about">
+      <div class="card rv">
+        <h3>Кто мы</h3>
+        <p>«Малина Юнайтед» — команда друзей, которая выросла из дворового футбола в полноценный медиапроект. Мы готовимся к заявке в <b>Белорусскую медиалигу</b>: ставим игру, снимаем контент и собираем своё комьюнити.</p>
+        <p>Цвета клуба — малиновый и графит, на эмблеме — малина на щите и мяч. Играем в атаку, уважаем соперника, не прощаем ошибок в своей штрафной.</p>
+      </div>
+      <div class="card coach-card rv">
+        <h3>Главный тренер</h3>
+        <div class="coach">
+          <div class="num">69</div>
+          <div>
+            <b>Герман Зументс</b>
+            <span>Главный тренер</span><br>
+            <span class="nick">CRYPTO.COM&nbsp;· №69</span>
+          </div>
+        </div>
+        <div class="coach-quote">«Мы не приходим поучаствовать. Мы приходим забирать своё».</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pitch-sec" id="formation">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Тактика</span>
+      <h2>Стартовый состав</h2>
+    </div>
+    <div class="pitch-grid">
+      <div class="pitch-frame rv">
+      <svg class="pitch" viewBox="0 0 400 600" role="img" aria-label="Расстановка 4-2-3-1 на футбольном поле">
+        <defs>
+          <linearGradient id="turf" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#2a6b40"/>
+            <stop offset="1" stop-color="#1e4e2f"/>
+          </linearGradient>
+          <radialGradient id="spot" cx=".5" cy=".35" r=".8">
+            <stop offset="0" stop-color="#ffffff14"/>
+            <stop offset="1" stop-color="#ffffff00"/>
+          </radialGradient>
+        </defs>
+        <rect width="400" height="600" fill="url(#turf)"/>
+        <g fill="#ffffff0d">
+          <rect y="0" width="400" height="60"/><rect y="120" width="400" height="60"/>
+          <rect y="240" width="400" height="60"/><rect y="360" width="400" height="60"/>
+          <rect y="480" width="400" height="60"/>
+        </g>
+        <rect width="400" height="600" fill="url(#spot)"/>
+        <g stroke="var(--pitch-line)" stroke-width="2" fill="none" opacity=".85">
+          <rect x="14" y="14" width="372" height="572" rx="2"/>
+          <line x1="14" y1="300" x2="386" y2="300"/>
+          <circle cx="200" cy="300" r="52"/>
+          <rect x="92" y="14" width="216" height="66"/>
+          <rect x="148" y="14" width="104" height="28"/>
+          <rect x="92" y="520" width="216" height="66"/>
+          <rect x="148" y="558" width="104" height="28"/>
+        </g>
+        <g font-family="Golos Text,Arial,sans-serif" text-anchor="middle">
+          <!-- Вратарь -->
+          <g><circle cx="200" cy="540" r="19" fill="#e8b93c"/><text x="200" y="546" font-size="15" font-weight="700" fill="#171a22">99</text><text x="200" y="575" font-size="13" font-weight="600" fill="#fff">Баш</text></g>
+          <!-- Защита -->
+          <g><circle cx="62" cy="448" r="19" fill="var(--berry)"/><text x="62" y="454" font-size="15" font-weight="700" fill="#fff">67</text><text x="62" y="483" font-size="13" font-weight="600" fill="#fff">Протос</text></g>
+          <g><circle cx="152" cy="462" r="19" fill="var(--berry)"/><text x="152" y="468" font-size="15" font-weight="700" fill="#fff">1</text><text x="152" y="497" font-size="13" font-weight="600" fill="#fff">Альберт</text></g>
+          <g><circle cx="248" cy="462" r="19" fill="var(--berry)"/><text x="248" y="468" font-size="15" font-weight="700" fill="#fff">14</text><text x="248" y="497" font-size="13" font-weight="600" fill="#fff">Глеб</text></g>
+          <g><circle cx="338" cy="448" r="19" fill="var(--berry)"/><text x="338" y="454" font-size="15" font-weight="700" fill="#fff">77</text><text x="338" y="483" font-size="13" font-weight="600" fill="#fff">Потап</text></g>
+          <!-- Опорная зона -->
+          <g><circle cx="138" cy="352" r="19" fill="var(--berry)"/><text x="138" y="358" font-size="15" font-weight="700" fill="#fff">24</text><text x="138" y="387" font-size="13" font-weight="600" fill="#fff">Семён</text></g>
+          <g><circle cx="262" cy="352" r="19" fill="var(--berry)"/><text x="262" y="358" font-size="15" font-weight="700" fill="#fff">18</text><text x="262" y="387" font-size="13" font-weight="600" fill="#fff">Макар</text></g>
+          <!-- Атакующая тройка -->
+          <g><circle cx="200" cy="252" r="19" fill="var(--berry)"/><text x="200" y="258" font-size="15" font-weight="700" fill="#fff">11</text><text x="200" y="287" font-size="13" font-weight="600" fill="#fff">Демешко</text></g>
+          <g><circle cx="70" cy="172" r="19" fill="var(--berry)"/><text x="70" y="178" font-size="15" font-weight="700" fill="#fff">7</text><text x="70" y="207" font-size="13" font-weight="600" fill="#fff">Коняхин</text></g>
+          <g><circle cx="330" cy="172" r="19" fill="var(--berry)"/><text x="330" y="178" font-size="15" font-weight="700" fill="#fff">10</text><text x="330" y="207" font-size="13" font-weight="600" fill="#fff">Ждан</text></g>
+          <!-- Нападающий -->
+          <g><circle cx="200" cy="100" r="19" fill="var(--berry)"/><text x="200" y="106" font-size="15" font-weight="700" fill="#fff">19</text><text x="200" y="135" font-size="13" font-weight="600" fill="#fff">Кабак</text></g>
+        </g>
+      </svg>
+      </div>
+      <div class="pitch-note rv">
+        <span class="formation-tag">4-2-3-1</span>
+        <p>Компактный блок в обороне, быстрый выход через опорную пару и свободная «десятка» под нападающим. Фланги работают в обе стороны.</p>
+        <ul>
+          <li><b>Ворота</b>Баш — последний рубеж</li>
+          <li><b>Оборона</b>Протос · Альберт · Глеб · Потап</li>
+          <li><b>Опорная зона</b>Семён · Макар</li>
+          <li><b>Под нападающим</b>Демешко</li>
+          <li><b>Фланги</b>Коняхин слева · Ждан справа</li>
+          <li><b>Остриё</b>Кабак</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="squad">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Заявка</span>
+      <h2>Состав команды</h2>
+      <p>Основная обойма и скамейка «Малины Юнайтед» на дебютный сезон в медиалиге.</p>
+    </div>
+
+    <div class="squad-sub-head">Основа</div>
+    <div class="squad-grid">
+      <div class="player gk rv"><div class="num">99</div><div><b>Баш</b><span class="nick">BASH</span><br><span class="pos">Вратарь</span></div></div>
+      <div class="player rv"><div class="num">1</div><div><b>Альберт</b><span class="nick">ALBERTIK</span><br><span class="pos">Центральный защитник</span></div></div>
+      <div class="player rv"><div class="num">14</div><div><b>Глеб</b><span class="nick">PRADICH</span><br><span class="pos">Центральный защитник</span></div></div>
+      <div class="player rv"><div class="num">77</div><div><b>Потап</b><span class="nick">POTAPYXH</span><br><span class="pos">Правый защитник</span></div></div>
+      <div class="player rv"><div class="num">67</div><div><b>Протос</b><span class="nick">PAMPERS</span><br><span class="pos">Левый защитник</span></div></div>
+      <div class="player rv"><div class="num">24</div><div><b>Семён</b><span class="nick">SAIMON</span><br><span class="pos">Центральный полузащитник</span></div></div>
+      <div class="player rv"><div class="num">18</div><div><b>Макар</b><span class="nick">MAKECH</span><br><span class="pos">Центральный полузащитник</span></div></div>
+      <div class="player rv"><div class="num">11</div><div><b>Демешко</b><span class="nick">CEO</span><br><span class="pos">Атакующий полузащитник</span></div></div>
+      <div class="player rv"><div class="num">7</div><div><b>Коняхин</b><span class="nick">KONYAKHA</span><br><span class="pos">Левый вингер</span></div></div>
+      <div class="player rv"><div class="num">19</div><div><b>Кабак</b><span class="nick">KABA</span><br><span class="pos">Нападающий</span></div></div>
+      <div class="player rv"><div class="num">10</div><div><b>Ждан</b><span class="nick">ZHDAAN</span><br><span class="pos">Правый вингер</span></div></div>
+    </div>
+
+    <div class="squad-sub-head">Замена</div>
+    <div class="squad-grid">
+      <div class="player sub rv"><div class="num">17</div><div><b>Вяз</b><span class="nick">VIAZOBUY</span><br><span class="pos">Запасной</span></div></div>
+      <div class="player sub rv"><div class="num">9</div><div><b>Дудак</b><span class="nick">DUDAK</span><br><span class="pos">Запасной</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="kit-sec" id="kit">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Экипировка</span>
+      <h2>Игровая форма</h2>
+      <p>Домашний комплект сезона-2026: белая база, малиновые боковые панели и клубная эмблема на груди.</p>
+    </div>
+    <figure class="kit-figure rv">
+      <img src="kit.webp" alt="Домашняя форма Малины Юнайтед: белая футболка с малиновыми полосами — вид спереди, сбоку и сзади" loading="lazy">
+    </figure>
+    <div class="kit-notes">
+      <div class="kit-note rv"><b>Цвета</b><span>Белый + фирменный малиновый с тёмной окантовкой</span></div>
+      <div class="kit-note rv"><b>На груди</b><span>Эмблема клуба, номер игрока и спонсор W.MARKET</span></div>
+      <div class="kit-note rv"><b>На спине</b><span>Игровой ник, номер и флаг Беларуси</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="matches">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="eyebrow">Календарь</span>
+      <h2>Матчи</h2>
+    </div>
+    <div class="matches rv">
+      <div class="soon">Скоро первый матч</div>
+      <p>Команда готовится к заявке в Белорусскую медиалигу. Расписание игр и результаты появятся здесь после жеребьёвки.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <img src="logo.jpg" alt="">
+    <span>«Малина Юнайтед» · Белорусская медиалига</span>
+    <span class="right">Сладкая ягода — жёсткая игра · 2026</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 3D-малина (Three.js) ---------- */
+  var canvas = document.getElementById('berry3d');
+  if (canvas && window.THREE) try {
+    var renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias: true});
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+    camera.position.set(0, 0.2, 7.2);
+
+    scene.add(new THREE.AmbientLight(0x3a2a3a, 1.1));
+    var key = new THREE.DirectionalLight(0xffffff, 1.15); key.position.set(4, 5, 6); scene.add(key);
+    var fillPink = new THREE.PointLight(0xff4d8d, 1.1, 30); fillPink.position.set(-5, -2, 4); scene.add(fillPink);
+    var rimGreen = new THREE.PointLight(0x6cbf45, 0.8, 30); rimGreen.position.set(3, 4, -5); scene.add(rimGreen);
+    var gold = new THREE.PointLight(0xdfb65e, 0.5, 25); gold.position.set(0, -4, 3); scene.add(gold);
+
+    var berry = new THREE.Group(); // вся эмблема целиком
+
+    // --- Щит: тёмный корпус + малиновая панель ---
+    function shieldShape(s) {
+      var sh = new THREE.Shape();
+      sh.moveTo(-1.7 * s, 1.68 * s);
+      sh.lineTo(0, 2.0 * s);
+      sh.lineTo(1.7 * s, 1.68 * s);
+      sh.lineTo(1.7 * s, 0.3 * s);
+      sh.quadraticCurveTo(1.62 * s, -1.4 * s, 0, -2.25 * s);
+      sh.quadraticCurveTo(-1.62 * s, -1.4 * s, -1.7 * s, 0.3 * s);
+      sh.closePath();
+      return sh;
+    }
+    var darkMat = new THREE.MeshPhysicalMaterial({color: 0x20242f, roughness: 0.38, metalness: 0.4, clearcoat: 0.6, clearcoatRoughness: 0.25});
+    var outer = new THREE.Mesh(
+      new THREE.ExtrudeGeometry(shieldShape(1), {depth: 0.28, bevelEnabled: true, bevelThickness: 0.09, bevelSize: 0.09, bevelSegments: 3}),
+      darkMat
+    );
+    outer.position.z = -0.5;
+    berry.add(outer);
+    var panel = new THREE.Mesh(
+      new THREE.ExtrudeGeometry(shieldShape(0.86), {depth: 0.12, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 2}),
+      new THREE.MeshPhysicalMaterial({color: 0xc5114d, roughness: 0.3, metalness: 0.12, clearcoat: 0.9, clearcoatRoughness: 0.2})
+    );
+    panel.position.z = -0.08;
+    berry.add(panel);
+
+    // --- Малина в верхней части щита ---
+    var rasp = new THREE.Group();
+    var N = 36, R = 0.74;
+    var drupeGeo = new THREE.SphereGeometry(0.23, 20, 20);
+    var cA = new THREE.Color(0xb80e4e), cB = new THREE.Color(0xff4d8d);
+    for (var i = 0; i < N; i++) {
+      var k = i + 0.5;
+      var phi = Math.acos(1 - 2 * k / N);
+      var theta = Math.PI * (1 + Math.sqrt(5)) * k;
+      var x = R * Math.sin(phi) * Math.cos(theta);
+      var y = R * Math.cos(phi) * 1.16;
+      var z = R * Math.sin(phi) * Math.sin(theta);
+      if (y > 0.72) continue; // место под листья
+      var mat = new THREE.MeshPhysicalMaterial({
+        color: cA.clone().lerp(cB, Math.random() * 0.55 + (y + 1) / 5),
+        roughness: 0.22, metalness: 0.05,
+        clearcoat: 1, clearcoatRoughness: 0.12
+      });
+      var m = new THREE.Mesh(drupeGeo, mat);
+      m.position.set(x, y, z);
+      m.scale.setScalar(0.9 + Math.random() * 0.25);
+      rasp.add(m);
+    }
+    var leafMat = new THREE.MeshStandardMaterial({color: 0x5fa33e, roughness: 0.6, metalness: 0});
+    var leafGeo = new THREE.ConeGeometry(0.18, 0.66, 7);
+    for (var j = 0; j < 5; j++) {
+      var leaf = new THREE.Mesh(leafGeo, leafMat);
+      var a = j / 5 * Math.PI * 2;
+      leaf.position.set(Math.cos(a) * 0.33, 0.82, Math.sin(a) * 0.33);
+      leaf.rotation.z = Math.cos(a) * 1.05;
+      leaf.rotation.x = -Math.sin(a) * 1.05;
+      leaf.scale.set(1, 1, 0.35);
+      rasp.add(leaf);
+    }
+    var stem = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.045, 0.06, 0.36, 8),
+      new THREE.MeshStandardMaterial({color: 0x4c8a30, roughness: 0.7})
+    );
+    stem.position.y = 1.02;
+    rasp.add(stem);
+    rasp.position.set(0, 0.68, 0.42);
+    berry.add(rasp);
+
+    // --- Лента с названием клуба ---
+    var ribCanvas = document.createElement('canvas');
+    ribCanvas.width = 1024; ribCanvas.height = 256;
+    function drawRibbon() {
+      var g = ribCanvas.getContext('2d');
+      g.clearRect(0, 0, 1024, 256);
+      g.fillStyle = '#1b1f2b';
+      g.beginPath();
+      g.moveTo(0, 0); g.lineTo(1024, 0); g.lineTo(976, 128); g.lineTo(1024, 256); g.lineTo(0, 256); g.lineTo(48, 128);
+      g.closePath(); g.fill();
+      g.fillStyle = '#ffffff';
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.font = '400 86px "Russo One", Arial, sans-serif';
+      g.fillText('МАЛИНА ЮНАЙТЕД', 512, 136, 860);
+    }
+    drawRibbon();
+    var ribTex = new THREE.CanvasTexture(ribCanvas);
+    ribTex.anisotropy = 4;
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ drawRibbon(); ribTex.needsUpdate = true; });
+    var ribGeo = new THREE.PlaneGeometry(3.9, 0.82, 48, 1);
+    var rp = ribGeo.attributes.position;
+    for (var v = 0; v < rp.count; v++) { // лёгкий изгиб ленты вперёд
+      var rx = rp.getX(v);
+      rp.setZ(v, 0.26 * (1 - Math.pow(rx / 1.95, 2)));
+    }
+    ribGeo.computeVertexNormals();
+    var ribbon = new THREE.Mesh(ribGeo, new THREE.MeshStandardMaterial({map: ribTex, roughness: 0.55, metalness: 0.1, side: THREE.DoubleSide, transparent: true}));
+    ribbon.position.set(0, -0.42, 0.42);
+    ribbon.rotation.x = -0.07;
+    berry.add(ribbon);
+
+    // --- Футбольный мяч внизу щита ---
+    var ballCanvas = document.createElement('canvas');
+    ballCanvas.width = 512; ballCanvas.height = 256;
+    (function(){
+      var g = ballCanvas.getContext('2d');
+      g.fillStyle = '#f3f3f1'; g.fillRect(0, 0, 512, 256);
+      g.fillStyle = '#20242e';
+      for (var row = 0; row < 3; row++) {
+        for (var col = 0; col < 5; col++) {
+          var cx = col * 112 + (row % 2 ? 56 : 0) + 28;
+          var cy = row * 86 + 42;
+          g.beginPath();
+          for (var pnt = 0; pnt < 5; pnt++) {
+            var an = -Math.PI / 2 + pnt * Math.PI * 2 / 5;
+            var px = cx + Math.cos(an) * 26, py = cy + Math.sin(an) * 26;
+            if (pnt === 0) g.moveTo(px, py); else g.lineTo(px, py);
+          }
+          g.closePath(); g.fill();
+        }
+      }
+    })();
+    var ballTex = new THREE.CanvasTexture(ballCanvas);
+    var ballMesh = new THREE.Mesh(
+      new THREE.SphereGeometry(0.52, 32, 32),
+      new THREE.MeshPhysicalMaterial({map: ballTex, roughness: 0.42, metalness: 0.02, clearcoat: 0.5, clearcoatRoughness: 0.3})
+    );
+    ballMesh.position.set(0, -1.32, 0.46);
+    berry.add(ballMesh);
+
+    berry.scale.setScalar(1.12);
+    scene.add(berry);
+
+    // Орбитальные частицы — «искры» клубных цветов
+    var pGeo = new THREE.BufferGeometry();
+    var P = 160, pos = new Float32Array(P * 3);
+    for (var p = 0; p < P; p++) {
+      var r = 2.6 + Math.random() * 2.6;
+      var t = Math.random() * Math.PI * 2;
+      var h = (Math.random() - 0.5) * 5;
+      pos[p*3] = Math.cos(t) * r; pos[p*3+1] = h; pos[p*3+2] = Math.sin(t) * r;
+    }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    var sparks = new THREE.Points(pGeo, new THREE.PointsMaterial({color: 0xff6fa5, size: 0.045, transparent: true, opacity: 0.75}));
+    scene.add(sparks);
+    var sparks2 = new THREE.Points(pGeo.clone(), new THREE.PointsMaterial({color: 0xdfb65e, size: 0.03, transparent: true, opacity: 0.5}));
+    sparks2.rotation.y = 2.1; scene.add(sparks2);
+
+    function fit() {
+      var w = canvas.clientWidth || 460, h = canvas.clientHeight || w;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h; camera.updateProjectionMatrix();
+    }
+    fit(); addEventListener('resize', fit);
+
+    var tx = 0, ty = 0, dragging = false, lx = 0, ly = 0, vx = 0;
+    function onMove(x, y, rect) {
+      tx = ((y - rect.top) / rect.height - 0.5) * 0.9;
+      ty = ((x - rect.left) / rect.width - 0.5) * 1.4;
+    }
+    canvas.addEventListener('pointermove', function(e){
+      var rect = canvas.getBoundingClientRect();
+      if (dragging) { vx = (e.clientX - lx) * 0.01; lx = e.clientX; }
+      onMove(e.clientX, e.clientY, rect);
+    });
+    canvas.addEventListener('pointerdown', function(e){ dragging = true; lx = e.clientX; });
+    addEventListener('pointerup', function(){ dragging = false; });
+
+    var t0 = performance.now(), spin = 0;
+    function frame(now) {
+      var t = (now - t0) / 1000;
+      spin += 0.0045 + vx; vx *= 0.95;
+      berry.rotation.y = spin + ty * 0.6;
+      berry.rotation.x = -0.12 + tx * 0.5;
+      berry.position.y = Math.sin(t * 1.1) * 0.14;
+      ballMesh.rotation.y = t * 0.5;
+      sparks.rotation.y = t * 0.05;
+      sparks2.rotation.y = -t * 0.04;
+      renderer.render(scene, camera);
+      if (!reduced) requestAnimationFrame(frame);
+    }
+    if (reduced) { frame(t0 + 16); } else { requestAnimationFrame(frame); }
+  } catch (e) { /* нет WebGL — герой остаётся с градиентами */ }
+
+  /* ---------- Звёздная пыль за героем ---------- */
+  var sc = document.getElementById('stars');
+  if (sc) try {
+    var ctx = sc.getContext('2d');
+    var dots = [];
+    function sfit() {
+      sc.width = sc.offsetWidth * Math.min(devicePixelRatio || 1, 2);
+      sc.height = sc.offsetHeight * Math.min(devicePixelRatio || 1, 2);
+      dots = [];
+      for (var i = 0; i < 70; i++) dots.push({
+        x: Math.random() * sc.width, y: Math.random() * sc.height,
+        r: Math.random() * 1.6 + 0.4, s: Math.random() * 0.25 + 0.05,
+        c: Math.random() < 0.7 ? '227,25,95' : '223,182,94'
+      });
+    }
+    sfit(); addEventListener('resize', sfit);
+    function sframe(t) {
+      ctx.clearRect(0, 0, sc.width, sc.height);
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i];
+        d.y -= d.s; if (d.y < -4) d.y = sc.height + 4;
+        var tw = 0.35 + 0.3 * Math.sin(t / 900 + i);
+        ctx.fillStyle = 'rgba(' + d.c + ',' + tw + ')';
+        ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, 7); ctx.fill();
+      }
+      if (!reduced) requestAnimationFrame(sframe);
+    }
+    if (reduced) { sframe(0); } else { requestAnimationFrame(sframe); }
+  } catch (e) {}
+
+  /* ---------- Появление секций при скролле ---------- */
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add('on'); io.unobserve(en.target); } });
+    }, {threshold: 0.12});
+    document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---------- 3D-наклон карточек игроков ---------- */
+  if (!reduced && matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.player').forEach(function(card){
+      card.addEventListener('pointermove', function(e){
+        var r = card.getBoundingClientRect();
+        var rx = ((e.clientY - r.top) / r.height - 0.5) * -8;
+        var ry = ((e.clientX - r.left) / r.width - 0.5) * 10;
+        card.style.transform = 'perspective(700px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-3px)';
+      });
+      card.addEventListener('pointerleave', function(){ card.style.transform = ''; });
+    });
+  }
+})();
+</script>
